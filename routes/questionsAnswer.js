@@ -1,21 +1,18 @@
 const express = require("express");
-const {
-  comprehensioni_model,
-  cloze_model,
-  categorize_model,
-} = require("../models");
-
-const questionrouter = express.Router();
+const { comprehension_model } = require("../models/Comprehension_model");
+const { cloze_model } = require("../models/Cloze_model");
+const { categorize_model } = require("../models/Categorize_model");
+const questionAnswerRouter = express.Router();
 
 // Add questions
-questionrouter.post("/add", async (req, res) => {
+questionAnswerRouter.post("/add", async (req, res) => {
   try {
     const { type, data } = req.body;
     let questionModel;
 
     switch (type) {
       case "categorize":
-        questionModel = comprehensioni_model;
+        questionModel = comprehension_model;
         break;
 
       case "cloze":
@@ -38,11 +35,11 @@ questionrouter.post("/add", async (req, res) => {
 });
 
 // Get questions
-questionrouter.get("/getAll", async (req, res) => {
+questionAnswerRouter.get("/getAll", async (req, res) => {
   try {
     const [categorizeQuestions, clozeQuestions, comprehensionQuestions] =
       await Promise.all([
-        comprehensioni_model.find(),
+        comprehension_model.find(),
         cloze_model.find(),
         categorize_model.find(),
       ]);
@@ -60,5 +57,5 @@ questionrouter.get("/getAll", async (req, res) => {
 });
 
 module.exports = {
-  questionrouter,
+  questionAnswerRouter,
 };

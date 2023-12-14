@@ -2,13 +2,13 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const { connection } = require("./db");
-const { questionrouter } = require("./routes/questions");
+const { questionAnswerRouter } = require("./routes/questionsAnswer");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use("/questions", questionrouter);
+app.use("/questions", questionAnswerRouter);
 
 app.listen(process.env.port, async () => {
   try {
