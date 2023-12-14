@@ -31,7 +31,7 @@ questionAnswerRouter.post("/add", async (req, res) => {
 });
 
 // Get questions
-questionAnswerRouter.get("/getAll", async (req, res) => {
+questionAnswerRouter.get("/getData", async (req, res) => {
   try {
     const [categorizeQuestions, clozeQuestions, comprehensionQuestions] = await Promise.all([
       categorize_model.find(),
