@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const clozeSchema = mongoose.Schema(
+const cloze_Schema = mongoose.Schema(
   {
     question: String,
     blanks: [String],
@@ -10,7 +10,7 @@ const clozeSchema = mongoose.Schema(
   }
 );
 
-const cloze_model = mongoose.model("Cloze", clozeSchema);
+const cloze_model = mongoose.model("Cloze", cloze_Schema);
 
 module.exports = {
   cloze_model,

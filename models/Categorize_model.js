@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const categorizeSchema = mongoose.Schema(
+const categorize_Schema = mongoose.Schema(
   {
     question: String,
     options: [String],
@@ -10,7 +10,7 @@ const categorizeSchema = mongoose.Schema(
   }
 );
 
-const categorize_model = mongoose.model("Categorize", categorizeSchema);
+const categorize_model = mongoose.model("Categorize", categorize_Schema);
 
 module.exports = {
   categorize_model,

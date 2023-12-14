@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const comprehensionSchema = mongoose.Schema(
+const comprehension_Schema = mongoose.Schema(
   {
     passage: String,
     questions: [
@@ -16,7 +16,7 @@ const comprehensionSchema = mongoose.Schema(
   }
 );
 
-const  comprehension_model = mongoose.model("Comprehension", comprehensionSchema);
+const  comprehension_model = mongoose.model("Comprehension", comprehension_Schema);
 
 module.exports = {
   comprehension_model,
