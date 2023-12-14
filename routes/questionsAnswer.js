@@ -5,28 +5,24 @@ const { categorize_model } = require("../models/Categorize_model");
 const questionAnswerRouter = express.Router();
 
 // Add questions
+const getModelByType = (type) => {
+  switch (type) {
+    case "categorize":
+      return categorize_model;
+    case "cloze":
+      return cloze_model;
+    case "comprehension":
+      return comprehension_model;
+    default:
+      throw new Error("Invalid question type");
+  }
+};
+
+// Add questions
 questionAnswerRouter.post("/add", async (req, res) => {
   try {
     const { type, data } = req.body;
-    let questionModel;
-
-    switch (type) {
-      case "categorize":
-        questionModel = comprehension_model;
-        break;
-
-      case "cloze":
-        questionModel = cloze_model;
-        break;
-
-      case "comprehension":
-        questionModel = categorize_model;
-        break;
-
-      default:
-        return res.status(400).json({ error: "Invalid question type" });
-    }
-
+    const questionModel = getModelByType(type);
     const newQuestion = await questionModel.create(data);
     res.json(newQuestion);
   } catch (err) {
@@ -37,12 +33,11 @@ questionAnswerRouter.post("/add", async (req, res) => {
 // Get questions
 questionAnswerRouter.get("/getAll", async (req, res) => {
   try {
-    const [categorizeQuestions, clozeQuestions, comprehensionQuestions] =
-      await Promise.all([
-        comprehension_model.find(),
-        cloze_model.find(),
-        categorize_model.find(),
-      ]);
+    const [categorizeQuestions, clozeQuestions, comprehensionQuestions] = await Promise.all([
+      categorize_model.find(),
+      cloze_model.find(),
+      comprehension_model.find(),
+    ]);
 
     const allQuestions = {
       categorize: categorizeQuestions,
@@ -55,6 +50,7 @@ questionAnswerRouter.get("/getAll", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 module.exports = {
   questionAnswerRouter,
