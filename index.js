@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/questions", questionAnswerRouter);
 
-app.listen(process.env.port, async () => {
+app.listen(process.env.PORT, async () => {
   try {
     await connection;
     console.log("Server running at port 8080");
