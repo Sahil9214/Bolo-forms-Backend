@@ -1,30 +1,22 @@
-const express = require ("express")
-var cors = require('cors')
-const { mcqRoutes } = require("./Routes/mcq.routes")
-const { connection } = require("./db")
-const { clozeRouter } = require("./Routes/cloze.routes")
-require('dotenv').config()
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
+const { connection } = require("./db");
+const { questionrouter } = require("./routes/questions");
 
-const port = process.env.port
+const app = express();
 
-const app = express()
-app.use(express.json()) // inbuilt middleware
-app.use(cors())
+app.use(express.json());
+app.use(cors());
+app.use("/questions", questionrouter);
 
-// MCQ : Route
-app.use("/mcq", mcqRoutes)
-
-// CLOZE : Route
-app.use("/cloze", clozeRouter) 
-
-app.listen(port, async()=>{
-    console.log(`connected to port ${port}`)
-    try {
-       await connection
-        console.log("Data base connected")
-    } catch (error) {
-        console.log("Unable to connect database", err)
-        res.send("Error", err)
-    }
-    
-})
+app.listen(process.env.port, async () => {
+  try {
+    await connection;
+    console.log("Server running at port 8080");
+    console.log("Connected to DB");
+  } catch (error) {
+    console.log(error);
+    console.log("Error in connecting to the database");
+  }
+});
